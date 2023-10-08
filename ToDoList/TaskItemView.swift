@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TaskItemView: View {
+    let taskName: String
+    
     var body: some View {
         HStack {
             Button {
@@ -20,11 +22,11 @@ struct TaskItemView: View {
                 }
             }
             
-            Text("My task")
+            Text(taskName)
         }
     }
 }
 
 #Preview {
-    TaskItemView()
+    TaskItemView(taskName: "Test name")
 }
