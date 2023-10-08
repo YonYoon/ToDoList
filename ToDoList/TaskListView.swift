@@ -8,29 +8,36 @@
 import SwiftUI
 
 struct TaskListView: View {
+    @ObservedObject var viewModel: TaskListViewModel
+    
     var body: some View {
         NavigationStack {
             List {
-                HStack {
-                    Button {
-                        // action
-                    } label: {
-                        ZStack {
-                            Circle()
-                                .stroke(.gray, lineWidth: 2)
-                                .frame(width: 30, height: 30)
-                        }
-                    }
-                    
-                    Text("My task")
+                ForEach(tasks) {task in
+                    TaskItemView(taskName: task.taskName)
                 }
             }
             .navigationTitle("To Do")
             .listStyle(.plain)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        viewModel.isShowingNewTask = true
+                    } label: {
+                        HStack(spacing: 3) {
+                            Image(systemName: "plus.circle")
+                            Text("New Task")
+                        }
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $viewModel.isShowingNewTask) {
+            NewTaskView(viewModel: TaskListViewModel(), isShowingNewTask: $viewModel.isShowingNewTask)
         }
     }
 }
 
 #Preview {
-    TaskListView()
+    TaskListView(viewModel: TaskListViewModel())
 }
