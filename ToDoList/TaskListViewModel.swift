@@ -9,4 +9,9 @@ import SwiftUI
 
 final class TaskListViewModel: ObservableObject {
     @Published var isShowingNewTask: Bool = false
+    
+    static func addNewTask(taskName: String) {
+        let task = Task(taskName: taskName, isCompleted: false)
+        tasks.append(task)
+    }
 }
