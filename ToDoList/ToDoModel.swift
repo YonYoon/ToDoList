@@ -7,10 +7,13 @@
 
 import Foundation
 
-struct Task {
+struct Task: Identifiable {
+    var id = UUID()
+    
     let taskName: String
     var isCompleted: Bool
 }
 
-var tasks: [Task] = []
+var tasks: [Task] = [Task(taskName: "My task", isCompleted: false)]
+
 
