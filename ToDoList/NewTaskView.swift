@@ -8,11 +8,36 @@
 import SwiftUI
 
 struct NewTaskView: View {
+    @ObservedObject var viewModel: TaskListViewModel
+    
+    @State private var taskText = ""
+    @Binding var isShowingNewTask: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            Form {
+                TextField("Your Task", text: $taskText)
+            }
+            .navigationTitle("New Task")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        isShowingNewTask = false
+                    }
+                }
+                
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Add") {
+                        tasks.append(Task(taskName: taskText, isCompleted: false))
+                        isShowingNewTask = false
+                    }
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    NewTaskView()
+    NewTaskView(viewModel: TaskListViewModel(), isShowingNewTask: .constant(true))
 }
